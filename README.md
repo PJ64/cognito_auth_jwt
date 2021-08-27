@@ -1,5 +1,5 @@
 ## Example
-This example deploys a microservice with an API Gateway that uses an Amazon Cognito user pool as an authoriser. 
+This example deploys a microservice with an API Gateway which uses an Amazon Cognito user pool as an authoriser. 
 
 ![architecture](./images/architecture_1.png "Architecture")
 
