@@ -5,7 +5,6 @@ import os
 from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(os.environ.get('TABLENAME'))
@@ -15,7 +14,6 @@ def lambda_handler(event, context):
     try:
         response = table.put_item(
             Item={
-                'orderid': body['order']['orderid'],
                 'accountid': body['order']['accountid'],
                 'vendorid': body['order']["vendorid"],
                 'orderdate':body['order']["orderdate"],

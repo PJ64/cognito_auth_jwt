@@ -12,7 +12,11 @@ export class CognitoAuthJwtStack extends Stack {
     //Create DynamoDB table
     const dynamoTable = new Table(this, "DynamoDBTable",{
       partitionKey: {
-        name: 'orderid',
+        name: 'accountid',
+        type: AttributeType.STRING
+      },
+      sortKey: {
+        name: 'vendorid',
         type: AttributeType.STRING
       },
       tableName: 'cognito_auth_jwt',
@@ -36,8 +40,8 @@ export class CognitoAuthJwtStack extends Stack {
     const lambda_post_order = new Function(this, "PostLambdaFunction",{
       runtime: Runtime.PYTHON_3_7,
       handler: "lambda_handler.lambda_handler",
-      code: Code.fromAsset("resources/post_order"),
-      functionName: "post_coffee_order",
+      code: Code.fromAsset("resources/cognito_auth_jwt_post"),
+      functionName: "cognito_auth_jwt_post",
       role: lambda_service_role,
       environment: {
         'TABLENAME': dynamoTable.tableName
@@ -47,8 +51,8 @@ export class CognitoAuthJwtStack extends Stack {
     const lambda_get_order = new Function(this, "GetLambdaFunction",{
       runtime: Runtime.PYTHON_3_7,
       handler: "lambda_handler.lambda_handler",
-      code: Code.fromAsset("resources/get_order"),
-      functionName: "get_coffee_order",
+      code: Code.fromAsset("resources/cognito_auth_jwt_get"),
+      functionName: "cognito_auth_jwt_get",
       role: lambda_service_role,
       environment: {
         'TABLENAME': dynamoTable.tableName

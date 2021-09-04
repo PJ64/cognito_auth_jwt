@@ -1,5 +1,16 @@
 ## Example
-This example deploys a microservice with an API Gateway which uses an Amazon Cognito user pool as an authoriser. 
+This example deploys a microservice with an API Gateway which uses an Amazon Cognito user pool as an authoriser. The POST method on the API Gateway allows authenticated requests only. 
+
+1. The first script is the json formatter, it is used to render json in a readable format.
+
+2. The second script creates a new Cognito user, the user will need to be confirmed.
+
+3. The login in script authenticates the new user and cognito will return a json web token (jwt)
+
+4. The jwt IdToken is passed to the API Gateway when called the post method. The API Gateway will validate the IdToken against the Cognito user pool that generated it. This is done using an 'Authorizer'.
+
+5. The final script calls an unauthenticated GET method to retrieve the item.
+
 
 ![architecture](./images/architecture_1.png "Architecture")
 
