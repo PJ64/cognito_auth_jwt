@@ -48,9 +48,7 @@ cdk synth
 ```bash
 cdk deploy
 ```
-5. Open the Jupyter Notebook in the **client directory** follow the instructions and execute the query.
-
-6. Check the dynamoDB table to view the records
+1. Open the Jupyter Notebook in the **jupyter_notebook directory** follow the instructions.
 
 ## Cleanup Commands
 1. Execute command: **cdk destroy**
