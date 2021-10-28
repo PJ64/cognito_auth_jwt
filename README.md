@@ -2,6 +2,9 @@ This example is designed for a concept mobile application called Skip the Line, 
 
 This example deploys a microservice which uses an API Gateway endpoint, AWS Lambda functions, a DynamoDB table and an Amazon Cognito user pool as an authoriser. The POST method on the API Gateway allows authenticated requests only. This ensures that only authenticated users can POST a new order. The Amazon DynamoDB table is partitioned on an accountid attribute and also includes a sort key on the vendorid attribute, together they form the primary key. 
 
+Using a Jupyter Notebook and the Cognito SDK you will create and authenticate a new Amazon Cognito user. With the jwt returned by Cognito, you will send a request to an API endpoint the only accepts authenticated requests.
+
+
 ![architecture](./images/architecture_1.png "Architecture")
 
 ## Setup

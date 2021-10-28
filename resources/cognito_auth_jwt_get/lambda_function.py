@@ -1,15 +1,16 @@
-import json
-import boto3
-import logging
-import os
+import json, boto3, logging, os
 from botocore.exceptions import ClientError
+from decimal import Decimal
 
 logger = logging.getLogger()
 
-def lambda_handler(event, context):
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ.get('TABLENAME'))
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table(os.environ.get('TABLENAME'))
 
+def lambda_handler(event, context):
+    return dynamodb_get_item(event)
+    
+def dynamodb_get_item(event):
     queryParam = event["queryStringParameters"]
     
     try:
@@ -23,8 +24,17 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Headers": 'Content-Type,X-Amz-Date,X-Api-Key',
                 "Access-Control-Allow-Methods": "OPTIONS,POST"
             },
-            'body': json.dumps(response)
+            'body': json.dumps(response, default=handle_decimal_type)
         }
     except ClientError:
         logger.exception("Couldn't Getitem from table %s",table)
         raise
+
+    #This function is used to convert decimal to float. Decimal can not be serialised to JSON format.
+def handle_decimal_type(obj):
+  if isinstance(obj, Decimal):
+      if float(obj).is_integer():
+         return int(obj)
+      else:
+         return float(obj)
+  raise TypeError

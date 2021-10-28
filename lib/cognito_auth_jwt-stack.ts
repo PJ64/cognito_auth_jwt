@@ -39,7 +39,7 @@ export class CognitoAuthJwtStack extends Stack {
     //Create 2 Lambda function. One for read and one for writing
     const lambda_post_order = new Function(this, "PostLambdaFunction",{
       runtime: Runtime.PYTHON_3_7,
-      handler: "lambda_handler.lambda_handler",
+      handler: "lambda_function.lambda_handler",
       code: Code.fromAsset("resources/cognito_auth_jwt_post"),
       functionName: "cognito_auth_jwt_post",
       role: lambda_service_role,
@@ -50,7 +50,7 @@ export class CognitoAuthJwtStack extends Stack {
 
     const lambda_get_order = new Function(this, "GetLambdaFunction",{
       runtime: Runtime.PYTHON_3_7,
-      handler: "lambda_handler.lambda_handler",
+      handler: "lambda_function.lambda_handler",
       code: Code.fromAsset("resources/cognito_auth_jwt_get"),
       functionName: "cognito_auth_jwt_get",
       role: lambda_service_role,
